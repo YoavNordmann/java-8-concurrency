@@ -26,11 +26,11 @@ public class ParallelStreamExample {
 		System.out.printf("Running Parallel Stream test on %s-core machine. Test Data Size: %s%n%n", 
 				Runtime.getRuntime().availableProcessors(), TEST_DATA_COUNT);
 		
-		System.out.printf("\nSingle Stream Version Time: %.3f seconds.%n", timingTest(list.stream()));
+		System.out.printf("\nSingle Stream Version:\n");
+		System.out.printf("\nTotal Time: %.3f seconds.%n", timingTest(list.stream()));
 		
-		System.out.println("\n\n***********************************************************************\n");
-		
-		System.out.printf("\nParallel Stream Version Time: %.3f seconds.%n", timingTest(list.parallelStream()));
+		System.out.printf("\nParallel Stream Version:\n");
+		System.out.printf("\nTotal Time: %.3f seconds.%n", timingTest(list.parallelStream()));
 		
 	}
 
