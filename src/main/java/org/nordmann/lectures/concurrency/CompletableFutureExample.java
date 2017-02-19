@@ -14,11 +14,14 @@ public class CompletableFutureExample {
 	 */
 	public static void main(String[] args) {
 
-		runRunnableExample();
+		CompletableFuture<Void> runnableExample = runRunnableExample();
 		
 		System.out.println("\n*************************************************************************\n");
 		
-		runSupplierExample();
+		CompletableFuture<Void> supplierExample = runSupplierExample();
+		
+		//wait for all to finish
+		CompletableFuture.allOf(runnableExample, supplierExample).join();
 
 
 	}
@@ -28,9 +31,10 @@ public class CompletableFutureExample {
 	
 	/**
 	 * Run runnable example.
+	 * @return 
 	 */
-	private static void runRunnableExample(){
-		CompletableFuture.runAsync(() -> System.out.println("I am a Runnable"))
+	private static CompletableFuture<Void> runRunnableExample(){
+		return CompletableFuture.runAsync(() -> System.out.println("I am a Runnable"))
 		.whenComplete((result, exc) -> System.out.println("Value: " + result));		
 	}
 	
@@ -38,9 +42,10 @@ public class CompletableFutureExample {
 	
 	/**
 	 * Run supplier example.
+	 * @return 
 	 */
-	private static void runSupplierExample(){
-		CompletableFuture.supplyAsync(() -> {return "I am a Supplier";})
+	private static CompletableFuture<Void> runSupplierExample(){
+		return CompletableFuture.supplyAsync(() -> {return "I am a Supplier";})
 		.whenComplete((result, exc) -> System.out.println("Result Value: " + result))
 		.thenApply(str -> str.substring(7))
 		.thenApplyAsync(str -> str += ": So Cool")
